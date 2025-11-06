@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>지구 리부트 | Earth Reboot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Pretendard', 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f5f7f2;
+      color: #2f3e2f;
+      overflow-x: hidden;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: opacity 0.8s ease;
+      padding: 3rem 2rem;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 650px;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      background-color: rgba(255,255,255,0.7);
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.6rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 0.4rem;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3e8e41;
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .eco-score {
+      font-weight: bold;
+      color: #4caf50;
+      font-size: 1.3rem;
+      margin-top: 0.5rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #e8f0e4;
+      font-size: 0.9rem;
+      color: #556b55;
+    }
+
+    /* 💬 캐릭터 대화창 */
+    .dialog-box {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
+      max-width: 600px;
+    }
+
+    .character {
+      position: absolute;
+      bottom: 15%;
+      left: 8%;
+      width: 160px;
+      border-radius: 50%;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+
+    /* 🌿 배경 이미지 */
+    #stage1 { background-image: url('https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1200&q=80'); }
+    #stage2 { background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80'); }
+    #stage3 { background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80'); }
+    #stage4 { background-image: url('https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80'); }
+    #stage5 { background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80'); }
+    #stage6 { background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80'); }
+
+  </style>
+</head>
+
+<body>
+  <!-- Stage 0 -->
+  <section id="stage0" class="fade-in" style="background:#f0f6ef;">
+    <h1>🌍 지구 리부트 (Earth Reboot)</h1>
+    <p>AI와 함께 지구를 되살리는 여정에 오신 것을 환영합니다.<br>당신의 선택이 지구의 미래를 바꿉니다.</p>
+    <button onclick="nextStage()">시작하기</button>
+  </section>
+
+  <!-- Stage 1 -->
+  <section id="stage1" class="hidden">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="AI 캐릭터" class="character">
+    <div class="dialog-box" id="dialog1">AI 가디언: 도시가 회색빛으로 변했어요... 나무를 심어 숨결을 되찾아주세요.</div>
+    <h1>Stage 1: 오염된 도시</h1>
+    <button onclick="updateScore(10)">🌱 나무 심기</button>
+    <button onclick="updateScore(-5)">🚫 무시하기</button>
+    <div class="eco-score" id="score1"></div>
+  </section>
+
+  <!-- Stage 2 -->
+  <section id="stage2" class="hidden">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="character">
+    <div class="dialog-box" id="dialog2">AI 가디언: 플라스틱이 바다를 덮고 있어요. 도와줄 수 있나요?</div>
+    <h1>Stage 2: 바다 정화</h1>
+    <button onclick="updateScore(10)">🧤 플라스틱 줍기</button>
+    <button onclick="updateScore(-5)">🐚 그냥 지나치기</button>
+    <div class="eco-score" id="score2"></div>
+  </section>
+
+  <!-- Stage 3 -->
+  <section id="stage3" class="hidden">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="character">
+    <div class="dialog-box" id="dialog3">AI 가디언: 숲이 사라지고 있어요. 당신의 손으로 다시 심어주세요!</div>
+    <h1>Stage 3: 숲 복원</h1>
+    <button onclick="updateScore(15)">🌲 숲 만들기</button>
+    <button onclick="updateScore(-10)">🪵 그냥 두기</button>
+    <div class="eco-score" id="score3"></div>
+  </section>
+
+  <!-- Stage 4 -->
+  <section id="stage4" class="hidden">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="character">
+    <div class="dialog-box" id="dialog4">AI 가디언: 지구의 에너지가 고갈되고 있어요. 어떤 에너지를 선택하시겠어요?</div>
+    <h1>Stage 4: 에너지 전환</h1>
+    <button onclick="updateScore(20)">🌞 재생에너지</button>
+    <button onclick="updateScore(-10)">🛢️ 화석연료</button>
+    <div class="eco-score" id="score4"></div>
+  </section>
+
+  <!-- Stage 5 -->
+  <section id="stage5" class="hidden">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="character">
+    <div class="dialog-box" id="aiMessage">AI 가디언: 당신의 선택을 평가합니다...</div>
+    <h1>Stage 5: AI 평가</h1>
+    <button onclick="aiResponse()">결과 보기 🤖</button>
+  </section>
+
+  <!-- Stage 6 (엔딩) -->
+  <section id="stage6" class="hidden">
+    <h1>🌏 엔딩</h1>
+    <p id="endingText"></p>
+    <button onclick="restartGame()">다시 시작하기 🔁</button>
+  </section>
+
+  <footer>
+    © 2025 김보아 — Earth Reboot는 김보아의 창작물입니다.
+  </footer>
+
+  <script>
+    let currentStage = 0;
+    let ecoScore = 0;
+
+    function nextStage() {
+      document.getElementById(`stage${currentStage}`).classList.add('hidden');
+      currentStage++;
+      const next = document.getElementById(`stage${currentStage}`);
+      next.classList.remove('hidden');
+      next.classList.add('fade-in');
+    }
+
+    function updateScore(amount) {
+      ecoScore += amount;
+      document.getElementById(`score${currentStage}`).textContent = `환경 지수: ${ecoScore}`;
+      const dialog = document.getElementById(`dialog${currentStage}`);
+      if (amount > 0) dialog.textContent = "AI 가디언: 훌륭해요! 당신의 선택이 지구를 살리고 있어요 🌿";
+      else dialog.textContent = "AI 가디언: 그 선택은 지구에 상처를 남깁니다... ☁️";
+      setTimeout(nextStage, 1500);
+    }
+
+    function aiResponse() {
+      const msg = document.getElementById("aiMessage");
+      if (ecoScore >= 40) msg.textContent = "AI 가디언: 놀라워요! 당신 덕분에 지구가 숨을 되찾았어요 🌿";
+      else if (ecoScore >= 20) msg.textContent = "AI 가디언: 아직 희망이 있어요. 조금만 더 노력해봐요 ⚖️";
+      else msg.textContent = "AI 가디언: 지구가 아직 고통받고 있습니다... ☁️";
+      setTimeout(nextStage, 2500);
+    }
+
+    function restartGame() {
+      ecoScore = 0;
+      currentStage = 0;
+      document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+      document.getElementById("stage0").classList.remove("hidden");
+      document.getElementById("stage0").classList.add("fade-in");
+    }
+
+    function nextStage() {
+      document.getElementById(`stage${currentStage}`).classList.add('hidden');
+      currentStage++;
+      if (currentStage === 6) {
+        document.getElementById('stage6').classList.remove('hidden');
+        const ending = document.getElementById('endingText');
+        if (ecoScore >= 40) ending.textContent = "🌿 지구가 푸르게 되살아났습니다! 당신의 선택이 미래를 바꿨습니다.";
+        else if (ecoScore >= 20) ending.textContent = "⚖️ 일부 지역은 회복 중입니다. 당신의 노력으로 균형이 찾아옵니다.";
+        else ending.textContent = "☁️ 지구는 여전히 아파합니다. 다음에는 더 현명한 선택을 해볼까요?";
+      } else {
+        const next = document.getElementById(`stage${currentStage}`);
+        next.classList.remove('hidden');
+        next.classList.add('fade-in');
+      }
+    }
+  </script>
+</body>
+</html>
